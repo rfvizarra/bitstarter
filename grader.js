@@ -41,16 +41,17 @@ var assertFileExists = function(infile) {
     return instr;
 };
 
-var cheerioHtmlFile = function(htmlfile) {
-    return cheerio.load(fs.readFileSync(htmlfile));
-};
-
 var loadChecks = function(checksfile) {
     return JSON.parse(fs.readFileSync(checksfile));
 };
 
 var checkHtmlFile = function(htmlfile, checksfile) {
-    $ = cheerioHtmlFile(htmlfile);
+    var html = fs.readFileSync(htmlfile);
+    return checkHtml(html, checksfile);
+};
+
+var checkHtml = function(html, checksfile) {
+    $ = cheerio.load(html);
     var checks = loadChecks(checksfile).sort();
     var out = {}
     for (var ii in checks) {
@@ -67,14 +68,8 @@ var checkHtmlUrl = function(url, checksfile) {
 	    console.error(result.message);
 	    this.retry(5000);
 	} else {
-	    $ = cheerio.load(result);
-	    var checks = loadChecks(checksfile).sort();
-	    var out = {}
-	    for (var ii in checks) {
-		var present = $(checks[ii]).length > 0;
-		out[checks[ii]] = present;
-	    }
-	    console.log(JSON.stringify(out, null, 4));
+	    var checkJson = checkHtml(result);
+	    console.log(JSON.stringify(checkJson, null, 4));
 	}
     });
 };
