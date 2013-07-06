@@ -10,8 +10,8 @@ References
 
   + cheerio
     - https://github.com/MatthewMueller/cheerio
-    - http://encosia.com/cheerio-faster-window-friendly-alternative-jsdom/
-    - http://maxogden.com/scrapping-with-node.html
+    - http://encosia.com/cheerio-faster-windows-friendly-alternative-jsdom/
+    - http://maxogden.com/scraping-with-node.html
 
   + commander.js
     - https://github.com/visionmedia/commander.js
